@@ -12,7 +12,17 @@ app.set('view engine', ejs);
 
 app.get('/', (req,res)=>{
     
-    res.render("index.ejs", {countryObject: ""});
+    let url = `https://restcountries.eu/rest/v2/name/Estonia?fullText=true`;
+
+    axios.get(url)
+    .then(function(response){
+        let countryObject = response.data[0];
+          console.log(countryObject.name);
+          res.render("index.ejs", {countryObject: countryObject});
+    })
+    .catch(function(error){
+        console.log(error);
+    });
 });
 
 app.post('/',(req, res) =>{
